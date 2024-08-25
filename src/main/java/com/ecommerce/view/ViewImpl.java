@@ -5,7 +5,9 @@ import com.ecommerce.controller.AdminController;
 import com.ecommerce.controller.CustomerController;
 import com.ecommerce.dao.*;
 import com.ecommerce.service.*;
+import com.ecommerce.util.DAOFactory;
 import com.ecommerce.util.DatabaseConnection;
+import com.ecommerce.util.ServiceFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,17 +25,14 @@ public class ViewImpl {
 
     public static void main(String[] args) {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            ProductDAO productDAO = new ProductDAOImpl(connection);
-            SubscriptionDAO subscriptionDAO = new SubscriptionDAOImpl(connection);
-            DeliveryScheduleDAO deliveryScheduleDAO = new DeliveryScheduleDAOImpl(connection);
-            OrderHistoryDAO orderHistoryDAO = new OrderHistoryDAOImpl(connection);
-            CustomerDAO customerDAO = new CustomerDAOImpl(connection);
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            ServiceFactory serviceFactory = new ServiceFactory(daoFactory);
 
-            ProductService productService = new ProductServiceImpl(productDAO);
-            SubscriptionService subscriptionService = new SubscriptionServiceImpl(subscriptionDAO);
-            DeliveryScheduleService deliveryScheduleService = new DeliveryScheduleServiceImpl(deliveryScheduleDAO);
-            OrderHistoryService orderHistoryService = new OrderHistoryServiceImpl(orderHistoryDAO);
-            CustomerService customerService = new CustomerServiceImpl(customerDAO);
+            ProductService productService = serviceFactory.getProductService();
+            SubscriptionService subscriptionService = serviceFactory.getSubscriptionService();
+            DeliveryScheduleService deliveryScheduleService = serviceFactory.getDeliveryScheduleService();
+            OrderHistoryService orderHistoryService = serviceFactory.getOrderHistoryService();
+            CustomerService customerService = serviceFactory.getCustomerService();
 
 
             Scanner scanner = new Scanner(System.in);

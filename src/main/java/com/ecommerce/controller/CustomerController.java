@@ -84,6 +84,10 @@ public class CustomerController {
 
     private void viewOrderHistory() throws SQLException {
         List<OrderHistory> orderHistories = orderHistoryService.getOrderHistoryByCustomerId(customerId);
+        if(orderHistories.isEmpty()) {
+            System.out.println("You have no order history");
+            return;
+        }
         System.out.println("Your Order History:");
         for (OrderHistory orderHistory : orderHistories) {
             System.out.println(orderHistory);
