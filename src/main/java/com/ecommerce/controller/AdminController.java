@@ -1,9 +1,11 @@
 package com.ecommerce.controller;
 
 import com.ecommerce.model.DeliverySchedule;
+import com.ecommerce.model.OrderHistory;
 import com.ecommerce.model.Product;
 import com.ecommerce.model.Subscription;
 import com.ecommerce.service.DeliveryScheduleService;
+import com.ecommerce.service.OrderHistoryService;
 import com.ecommerce.service.ProductService;
 import com.ecommerce.service.SubscriptionService;
 import java.sql.Connection;
@@ -17,11 +19,13 @@ public class AdminController {
     private ProductService productService;
     private SubscriptionService subscriptionService;
     private DeliveryScheduleService deliveryScheduleService;
+    private OrderHistoryService orderHistoryService;
 
-    public AdminController(ProductService productService, SubscriptionService subscriptionService, DeliveryScheduleService deliveryScheduleService) {
+    public AdminController(ProductService productService, SubscriptionService subscriptionService, DeliveryScheduleService deliveryScheduleService,OrderHistoryService orderHistoryService) {
         this.productService = productService;
         this.subscriptionService = subscriptionService;
         this.deliveryScheduleService = deliveryScheduleService;
+        this.orderHistoryService = orderHistoryService;
     }
 
     public void showAdminMenu() {
@@ -131,9 +135,12 @@ public class AdminController {
         }
     }
 
-    private void viewOrderHistory() {
-        // Placeholder for viewing order history, assuming it's implemented elsewhere
-        System.out.println("Order history feature is not yet implemented.");
+    private void viewOrderHistory() throws SQLException {
+        List<OrderHistory> orderHistories = orderHistoryService.getAllOrderHistory();
+        System.out.println("Order History:");
+        for (OrderHistory orderHistory : orderHistories) {
+            System.out.println(orderHistory);
+        }
     }
 
     private void viewDeliverySchedule(Scanner scanner) throws SQLException {

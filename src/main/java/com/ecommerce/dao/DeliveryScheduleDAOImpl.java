@@ -42,6 +42,7 @@ public class DeliveryScheduleDAOImpl implements DeliveryScheduleDAO {
         return schedules;
     }
 
+
     @Override
     public void updateDeliverySchedule(DeliverySchedule deliverySchedule) throws SQLException {
         String sql = "UPDATE delivery_schedule SET delivery_date = ? WHERE id = ?";
